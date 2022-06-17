@@ -3,8 +3,23 @@ import 'package:cbms/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class loginScreen extends StatelessWidget {
+class loginScreen extends StatefulWidget {
   const loginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<loginScreen> createState() => _loginScreenState();
+}
+
+class _loginScreenState extends State<loginScreen> {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +55,7 @@ class loginScreen extends StatelessWidget {
                   ),
                   Container(
                     child: TextFormField(
+                      controller: usernameController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.person),
                         labelText: "Username",
@@ -48,6 +64,8 @@ class loginScreen extends StatelessWidget {
                   ),
                   Container(
                     child: TextFormField(
+                      controller: passwordController, // <= NEW
+                      obscureText: true,
                       decoration: InputDecoration(
                         icon: Icon(Icons.lock),
                         labelText: "Password",
@@ -70,11 +88,8 @@ class loginScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => registerScreen()),
-                        );
+                        print(usernameController.text);
+                        print(passwordController.text);
                       },
                       child: const Text('Submit'),
                     ),
