@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'forgot_pw_screen.dart';
+
 class loginScreen extends StatefulWidget {
   final VoidCallback showRegisterPage;
   const loginScreen({Key? key, required this.showRegisterPage})
@@ -87,9 +89,19 @@ class _loginScreenState extends State<loginScreen> {
                       height: 15,
                     ),
                     Container(
-                      child: TextButton(
-                          onPressed: () {},
-                          child: Text('Forgot username/Password?')),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return ForgotPasswordPage();
+                                }));
+                              },
+                              child: Text('Forgot Password?')),
+                        ],
+                      ),
                     ),
                     Container(
                       child: ElevatedButton(
