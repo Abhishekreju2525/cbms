@@ -2,22 +2,32 @@ import 'package:cbms/main.dart';
 import 'package:cbms/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class loginScreen extends StatefulWidget {
-  const loginScreen({Key? key}) : super(key: key);
+  final VoidCallback showRegisterPage;
+  const loginScreen({Key? key, required this.showRegisterPage})
+      : super(key: key);
 
   @override
   State<loginScreen> createState() => _loginScreenState();
 }
 
 class _loginScreenState extends State<loginScreen> {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _usernameController.text.trim(),
+        password: _passwordController.text.trim());
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    usernameController.dispose();
-    passwordController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -25,80 +35,96 @@ class _loginScreenState extends State<loginScreen> {
   Widget build(BuildContext context) {
     return Material(
         child: Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  SizedBox(
-                    height: 75,
-                  ),
-                  Container(
-                    child: Center(
-                      child: Text(
-                        'Sign in',
-                        style: GoogleFonts.poppins(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 34,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    SizedBox(
+                      height: 75,
+                    ),
+                    Container(
+                      child: Center(
+                        child: Text(
+                          'Sign in',
+                          style: GoogleFonts.poppins(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 34,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 45,
-                  ),
-                  Container(
-                    child: TextFormField(
-                      controller: usernameController,
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.person),
-                        labelText: "Username",
-                      ),
+                    SizedBox(
+                      height: 45,
                     ),
-                  ),
-                  Container(
-                    child: TextFormField(
-                      controller: passwordController, // <= NEW
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
-                        labelText: "Password",
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Text('Forgot username/Password?')),
-                  ),
-                  Container(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
+                    Container(
+                      child: TextFormField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.person),
+                          labelText: "Username",
                         ),
                       ),
-                      onPressed: () {
-                        print(usernameController.text);
-                        print(passwordController.text);
-                      },
-                      child: const Text('Submit'),
                     ),
-                  )
-                ],
+                    Container(
+                      child: TextFormField(
+                        controller: _passwordController, // <= NEW
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.lock),
+                          labelText: "Password",
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      child: TextButton(
+                          onPressed: () {},
+                          child: Text('Forgot username/Password?')),
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0),
+                          ),
+                        ),
+                        onPressed: signIn,
+                        child: const Text('Submit'),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Not a member?'),
+                          TextButton(
+                              onPressed: widget.showRegisterPage,
+                              child: Text(
+                                'Sign up now',
+                                style: TextStyle(color: Colors.red),
+                              ))
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ));
   }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "47779725558",
+    "firebase_url": "https://college-bus-management-s-a8b60-default-rtdb.firebaseio.com",
+    "project_id": "college-bus-management-s-a8b60",
+    "storage_bucket": "college-bus-management-s-a8b60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47779725558:android:995ff333693adaab8c2cd7",
+        "android_client_info": {
+          "package_name": "com.example.cbms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47779725558-ovlv9gir01imfv5t4boko58eeig8rgqm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDZcsanQcSTq6k_wnmEcErURnKse79UYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47779725558-ovlv9gir01imfv5t4boko58eeig8rgqm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
