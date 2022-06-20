@@ -1,49 +1,40 @@
+// ignore: unused_import
 import 'package:cbms/main.dart';
+// ignore: unused_import
 import 'package:cbms/BottomNavigationBar.dart';
 import 'package:flutter/material.dart';
-class NavigationBar extends StatefulWidget {
-   NavigationBar ({Key? key}) : super(key: key);
- 
-  @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
-}
- 
+import 'package:google_nav_bar/google_nav_bar_dart';
 
- 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
- 
+class Homepage extends StatefulWidget {
+  const Homepage({Key? key}) : super(key: key);
+
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
+    return const Scaffold(
+      bottomNavigationBar: GNav(
+        tabs: [
+          GButton(
+            icon: Icons.home,
+            text: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            title: Text('E-pass'),
+          GButton(
+            icon: Icons.contact_mail,
+            text: 'E-pass',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.contact_mail),
-            title: Text('Ticket'),
+          GButton(
+            icon: Icons.bookmark,
+            text: 'Ticket',
           ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile'),
+          GButton(
+            icon: Icons.person,
+            text: 'Profile',
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black[800],
-        onTap: _onItemTapped,
       ),
     );
   }
