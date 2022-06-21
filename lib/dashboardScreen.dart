@@ -1,3 +1,4 @@
+import 'package:cbms/payment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,17 @@ class _dashboardScreenState extends State<dashboardScreen> {
             },
             color: Colors.amber,
             child: Text('Sign out'),
-          )
+          ),
+          MaterialButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const paymentPage()),
+              );
+            },
+            color: Colors.greenAccent,
+            child: Text('Payment'),
+          ),
         ],
       )),
     );

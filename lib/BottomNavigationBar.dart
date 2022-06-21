@@ -3,7 +3,7 @@ import 'package:cbms/main.dart';
 // ignore: unused_import
 import 'package:cbms/BottomNavigationBar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar_dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
