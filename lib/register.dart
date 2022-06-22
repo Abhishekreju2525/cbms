@@ -32,10 +32,18 @@ class _registerScreen extends State<registerScreen> {
   }
 
   Future signUp() async {
+    //Loading Circle
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        });
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: _usernameController.text.trim(),
       password: _passwordController.text.trim(),
     );
+    //pop the loading circle
+    Navigator.of(context).pop();
   }
 
   @override
