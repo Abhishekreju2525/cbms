@@ -20,9 +20,17 @@ class _loginScreenState extends State<loginScreen> {
   final _passwordController = TextEditingController();
 
   Future signIn() async {
+    //Loading Circle
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        });
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _usernameController.text.trim(),
         password: _passwordController.text.trim());
+    //pop the loading circle
+    Navigator.of(context).pop();
   }
 
   @override

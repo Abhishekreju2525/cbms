@@ -4,6 +4,7 @@ import 'package:cbms/main_page.dart';
 import 'package:cbms/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:restart_app/restart_app.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -36,12 +37,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 TextButton(
                     child: Text("Back to login"),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AuthPage()),
-                      );
-                      ;
+                      Restart.restartApp();
                     })
               ],
             );
