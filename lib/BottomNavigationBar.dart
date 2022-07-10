@@ -1,7 +1,3 @@
-// ignore: unused_import
-import 'package:cbms/main.dart';
-// ignore: unused_import
-import 'package:cbms/BottomNavigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
