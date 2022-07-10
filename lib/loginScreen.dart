@@ -1,3 +1,4 @@
+import 'package:cbms/dashboardScreen.dart';
 import 'package:cbms/main.dart';
 import 'package:cbms/register.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class _loginScreenState extends State<loginScreen> {
                         controller: _usernameController,
                         decoration: InputDecoration(
                           icon: Icon(Icons.person),
-                          labelText: "Username",
+                          labelText: "Email",
                         ),
                       ),
                     ),

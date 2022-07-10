@@ -3,9 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cbms/payment.dart';
+import 'package:restart_app/restart_app.dart';
 
 class dashboardScreen extends StatefulWidget {
   const dashboardScreen({Key? key}) : super(key: key);
+  // final String fullName;
+  // final String company;
+  // final int age;
+  // AddUser(this.fullName, this.company, this.age);
 
   @override
   State<dashboardScreen> createState() => _dashboardScreenState();
@@ -13,17 +18,6 @@ class dashboardScreen extends StatefulWidget {
 
 class _dashboardScreenState extends State<dashboardScreen> {
   final user = FirebaseAuth.instance.currentUser!;
-  List<String> docIDs = [];
-
-  // Future getDocId() async {
-  //   await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .get()
-  //       .then((snapshot) => snapshot.docs.forEach((document) {
-  //             print(document.reference);
-  //             docIDs.add(document.reference.id);
-  //           }));
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -143,17 +137,11 @@ class _dashboardScreenState extends State<dashboardScreen> {
             MaterialButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
+                FirebaseFirestore.instance.clearPersistence();
               },
               color: Colors.amber,
               child: Text('Sign out'),
             ),
-            // Expanded(
-            //   child: ListView.builder(itemBuilder: (context, index) {
-            //     return ListTile(
-            //       title: Text('name'),
-            //     );
-            //   }),
-            // ),
           ],
         ),
       ),
