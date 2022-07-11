@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
+  const Homepage(int i, {Key? key}) : super(key: key);
 
   @override
   State<Homepage> createState() => _HomepageState();
