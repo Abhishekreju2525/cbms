@@ -16,6 +16,9 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       bottomNavigationBar: GNav(
         onTabChange: (value) {
+          if (value == 0) {
+            dashboardScreen();
+          }
           if (value == 1) {
             dashboardScreen();
           }
@@ -23,9 +26,6 @@ class _HomepageState extends State<Homepage> {
             dashboardScreen();
           }
           if (value == 3) {
-            dashboardScreen();
-          }
-          if (value == 4) {
             profile();
           }
         },
