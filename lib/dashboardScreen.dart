@@ -23,6 +23,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int index;
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -147,7 +148,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: Homepage(),
+      bottomNavigationBar: Homepage(index = 0),
     );
   }
 }
