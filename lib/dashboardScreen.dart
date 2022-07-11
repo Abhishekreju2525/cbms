@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cbms/payment.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -147,6 +148,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: Homepage(),
     );
   }
 }

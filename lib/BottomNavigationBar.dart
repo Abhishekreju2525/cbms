@@ -1,3 +1,5 @@
+import 'package:cbms/dashboardScreen.dart';
+import 'package:cbms/profiles/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -13,17 +15,31 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: GNav(
-        tabs: [
+        onTabChange: (value) {
+          if (value == 0) {
+            dashboardScreen();
+          }
+          if (value == 1) {
+            dashboardScreen();
+          }
+          if (value == 2) {
+            dashboardScreen();
+          }
+          if (value == 3) {
+            profile();
+          }
+        },
+        tabs: const [
           GButton(
             icon: Icons.home,
             text: 'Home',
           ),
           GButton(
-            icon: Icons.contact_mail,
+            icon: Icons.airplane_ticket,
             text: 'E-pass',
           ),
           GButton(
-            icon: Icons.bookmark,
+            icon: Icons.confirmation_number,
             text: 'Ticket',
           ),
           GButton(
