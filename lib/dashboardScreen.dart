@@ -1,9 +1,12 @@
+import 'package:cbms/BottomNavigationBar.dart';
 import 'package:cbms/payment.dart';
+import 'package:cbms/userRole.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cbms/payment.dart';
 import 'package:restart_app/restart_app.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class dashboardScreen extends StatefulWidget {
   const dashboardScreen({Key? key}) : super(key: key);
@@ -137,7 +140,6 @@ class _dashboardScreenState extends State<dashboardScreen> {
             MaterialButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
-                FirebaseFirestore.instance.clearPersistence();
               },
               color: Colors.amber,
               child: Text('Sign out'),
