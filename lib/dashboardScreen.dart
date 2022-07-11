@@ -1,4 +1,3 @@
-import 'package:cbms/BottomNavigationBar.dart';
 import 'package:cbms/payment.dart';
 import 'package:cbms/userRole.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,7 +24,6 @@ class _dashboardScreenState extends State<dashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int index;
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -149,7 +147,6 @@ class _dashboardScreenState extends State<dashboardScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: Homepage(index = 0),
     );
   }
 }
