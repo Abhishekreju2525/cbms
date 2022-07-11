@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:cbms/loginScreen.dart';
 import 'package:cbms/main.dart';
 import 'package:cbms/register.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,7 @@ class registerScreen extends StatefulWidget {
 
 class _registerScreen extends State<registerScreen> {
   // final _confirmpasswordController = TextEditingController();
+  final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _usernameController = TextEditingController();
 
@@ -32,10 +34,32 @@ class _registerScreen extends State<registerScreen> {
   }
 
   Future signUp() async {
+    //Loading Circle
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        });
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: _usernameController.text.trim(),
       password: _passwordController.text.trim(),
     );
+    final user = FirebaseAuth.instance.currentUser!;
+    print(user.uid);
+    addUserDetails(
+        _nameController.text.trim(), _usernameController.text.trim());
+
+    //pop the loading circle
+    Navigator.of(context).pop();
+  }
+
+  Future addUserDetails(String name, String email) async {
+    final user = FirebaseAuth.instance.currentUser!;
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      'name': name,
+      'email': email,
+      'role': 'user',
+    });
   }
 
   @override
@@ -71,12 +95,22 @@ class _registerScreen extends State<registerScreen> {
                     SizedBox(
                       height: 45,
                     ),
+
+                    Container(
+                      child: TextFormField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.person),
+                          labelText: "Name",
+                        ),
+                      ),
+                    ),
                     Container(
                       child: TextFormField(
                         controller: _usernameController,
                         decoration: InputDecoration(
                           icon: Icon(Icons.person),
-                          labelText: "Username",
+                          labelText: "Email",
                         ),
                       ),
                     ),
