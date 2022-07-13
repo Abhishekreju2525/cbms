@@ -1,4 +1,5 @@
 import 'package:cbms/payment.dart';
+import 'package:cbms/profiles/category_card.dart';
 import 'package:cbms/userRole.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -96,34 +97,20 @@ class _dashboardScreenState extends State<dashboardScreen> {
             ),
             SizedBox(height: 25),
 
-            //horizontal listview
             Container(
               height: 80,
               child: ListView(
+                scrollDirection: Axis.horizontal,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    color: Colors.deepPurple[100],
-                    child: Row(
-                      children: [Text('No 1')],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              height: 80,
-              child: ListView(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    color: Colors.deepPurple[100],
-                    child: Row(
-                      children: [
-                        Text('8:55'),
-                      ],
-                    ),
-                  )
+                  CategoryCard(
+                    CategoryName: 'NO:5',
+                  ),
+                  CategoryCard(
+                    CategoryName: '08:55 am',
+                  ),
+                  CategoryCard(
+                    CategoryName: 'KL-14H-0226',
+                  ),
                 ],
               ),
             ),
