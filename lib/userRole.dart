@@ -59,7 +59,7 @@ class _userRoleState extends State<userRole> {
                 final data = snapshot.data as String;
 
                 if (data == 'user')
-                  return dashboardScreen();
+                  return Homepage();
                 else
                   return adminDash();
               }
@@ -79,7 +79,7 @@ class _userRoleState extends State<userRole> {
   routeUser(String? data) {
     if (data == 'user') {
       print('routed to user');
-      return dashboardScreen();
+      return Homepage();
     } else if (data == 'admin') {
       print('routed to admin');
       return adminDash();

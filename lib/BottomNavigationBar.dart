@@ -1,51 +1,44 @@
 import 'package:cbms/dashboardScreen.dart';
 import 'package:cbms/profiles/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage(int i, {Key? key}) : super(key: key);
+  const Homepage({Key? key}) : super(key: key);
 
   @override
   State<Homepage> createState() => _HomepageState();
 }
 
 class _HomepageState extends State<Homepage> {
+  int _pageIndex = 0;
+
+  final pages = [
+    dashboardScreen(),
+    dashboardScreen(),
+    dashboardScreen(),
+    profile(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: GNav(
-        onTabChange: (value) {
-          if (value == 0) {
-            dashboardScreen();
-          }
-          if (value == 1) {
-            dashboardScreen();
-          }
-          if (value == 2) {
-            dashboardScreen();
-          }
-          if (value == 3) {
-            profile();
-          }
+      body: pages[_pageIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.black,
+        currentIndex: _pageIndex,
+        onTap: (newIndex) {
+          setState(() {
+            _pageIndex = newIndex;
+          });
         },
-        tabs: const [
-          GButton(
-            icon: Icons.home,
-            text: 'Home',
-          ),
-          GButton(
-            icon: Icons.airplane_ticket,
-            text: 'E-pass',
-          ),
-          GButton(
-            icon: Icons.confirmation_number,
-            text: 'Ticket',
-          ),
-          GButton(
-            icon: Icons.person,
-            text: 'Profile',
-          ),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.airplane_ticket), label: 'E-Pass'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.confirmation_number), label: 'Ticket'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
