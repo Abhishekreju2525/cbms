@@ -60,6 +60,11 @@ class _registerScreen extends State<registerScreen> {
       'email': email,
       'role': 'user',
     });
+    FirebaseFirestore.instance
+        .collection("pass_data")
+        .doc(user.uid)
+        .set({'status': 'false'}).onError(
+            (e, _) => print("Error writing document: $e"));
   }
 
   @override

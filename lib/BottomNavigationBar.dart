@@ -1,4 +1,5 @@
 import 'package:cbms/dashboardScreen.dart';
+import 'package:cbms/passScreen.dart';
 import 'package:cbms/profiles/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _HomepageState extends State<Homepage> {
 
   final pages = [
     dashboardScreen(),
-    dashboardScreen(),
+    passScreen(),
     dashboardScreen(),
     profile(),
   ];
