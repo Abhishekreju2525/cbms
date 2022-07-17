@@ -15,6 +15,8 @@ class ticketScreen extends StatefulWidget {
   State<ticketScreen> createState() => _ticketScreenState();
 }
 
+final user = FirebaseAuth.instance.currentUser!;
+
 class _ticketScreenState extends State<ticketScreen> {
   TextEditingController amtController = TextEditingController();
   final cdate = DateTime.now();
@@ -67,7 +69,7 @@ class _ticketScreenState extends State<ticketScreen> {
 
       // Get data from docs and convert map to List
       final snapData = docSnap.data() as Map<String, dynamic>;
-      purchaseDate = snapData['purchase date'].toDate();
+
       // print('role : $role');
       print("purchase date ::: $purchaseDate");
       print("current date :::$curDate");
@@ -122,7 +124,7 @@ class _ticketScreenState extends State<ticketScreen> {
       "status": "true",
       // "serial": serialno,
     };
-
+    print(user.uid);
     FirebaseFirestore.instance
         .collection("ticket_data")
         .doc(user.uid)
@@ -164,123 +166,200 @@ class _ticketScreenState extends State<ticketScreen> {
                 // if we got our data
               } else if (snapshot.hasData) {
                 final data = snapshot.data as Map<String, dynamic>;
-                print("Snapshot data ::: $data");
 
-                return Scaffold(
-                  backgroundColor: Color.fromARGB(255, 0, 124, 103),
-                  appBar: AppBar(
-                    backgroundColor: Colors.transparent,
-                  ),
-                  body: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 100,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Buy bus ticket here',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            cursorColor: Colors.white,
-                            autofocus: false,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                                labelText: 'Enter amount to be paid',
-                                labelStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                ),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0))),
-                                errorStyle: TextStyle(
-                                    color: Color.fromARGB(255, 255, 196, 0),
-                                    fontSize: 15)),
-                            controller: amtController,
+                print("Snapshot data ::: $data");
+                if (data['status'] == "true") {
+                  return Scaffold(
+                    backgroundColor: Color.fromARGB(255, 248, 248, 248),
+                    body: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 100,
                           ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (amtController.text.toString().isNotEmpty) {
-                              setState(() {
-                                int amount =
-                                    int.parse(amtController.text.toString());
-                                openCheckout(amount);
-                              });
-                            }
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.all(9.0),
-                            child: Text('Make payment'),
+                          SizedBox(
+                            height: 10,
                           ),
-                          style:
-                              ElevatedButton.styleFrom(primary: Colors.green),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(11.0),
-                          child: Card(
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Active ticket'),
-                                  SizedBox(height: 20),
-                                  Row(
-                                    children: [
-                                      Card(
-                                        color: Colors.amber,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text("Amount : " +
-                                                    data['amount']),
-                                                SizedBox(height: 10),
-                                                Text("Ticket ID : " +
-                                                    data['Payment ID']),
-                                                SizedBox(height: 10),
-                                                Text("Booking date : " +
-                                                    purchaseDate.toString()),
-                                              ]),
-                                        ),
-                                      ),
-                                      QrImage(data: user.uid, size: 70),
-                                    ],
-                                  )
-                                ],
-                              ),
+                          Text(
+                            'Buy bus ticket here',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 53, 53, 53),
+                                fontSize: 38,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              cursorColor: Color.fromARGB(255, 43, 43, 43),
+                              autofocus: false,
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 139, 6, 6)),
+                              decoration: InputDecoration(
+                                  labelText: 'Enter amount to be paid',
+                                  labelStyle: TextStyle(
+                                    color: Color.fromARGB(255, 54, 54, 54),
+                                    fontSize: 15,
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0))),
+                                  errorStyle: TextStyle(
+                                      color: Color.fromARGB(255, 177, 0, 0),
+                                      fontSize: 15)),
+                              controller: amtController,
                             ),
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            height: 30,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (amtController.text.toString().isNotEmpty) {
+                                setState(() {
+                                  int amount =
+                                      int.parse(amtController.text.toString());
+                                  openCheckout(amount);
+                                });
+                              }
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(9.0),
+                              child: Text('Make payment'),
+                            ),
+                            style:
+                                ElevatedButton.styleFrom(primary: Colors.green),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(11.0),
+                            child: Card(
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Active ticket',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(height: 20),
+                                    Row(
+                                      children: [
+                                        Card(
+                                          color: Colors.amber,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("Amount : " +
+                                                      data['amount']),
+                                                  SizedBox(height: 10),
+                                                  Text("Ticket ID : " +
+                                                      data['Payment ID']),
+                                                  SizedBox(height: 10),
+                                                  Text("Booking date : " +
+                                                      purchaseDate.toString()),
+                                                ]),
+                                          ),
+                                        ),
+                                        QrImage(data: user.uid, size: 70),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  return Scaffold(
+                    backgroundColor: Color.fromARGB(255, 248, 248, 248),
+                    body: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 100,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Buy bus ticket here',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 53, 53, 53),
+                                fontSize: 38,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              cursorColor: Color.fromARGB(255, 43, 43, 43),
+                              autofocus: false,
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 139, 6, 6)),
+                              decoration: InputDecoration(
+                                  labelText: 'Enter amount to be paid',
+                                  labelStyle: TextStyle(
+                                    color: Color.fromARGB(255, 54, 54, 54),
+                                    fontSize: 15,
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0))),
+                                  errorStyle: TextStyle(
+                                      color: Color.fromARGB(255, 177, 0, 0),
+                                      fontSize: 15)),
+                              controller: amtController,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (amtController.text.toString().isNotEmpty) {
+                                setState(() {
+                                  int amount =
+                                      int.parse(amtController.text.toString());
+                                  openCheckout(amount);
+                                });
+                              }
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(9.0),
+                              child: Text('Make payment'),
+                            ),
+                            style:
+                                ElevatedButton.styleFrom(primary: Colors.green),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
               }
             }
 

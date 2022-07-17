@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cbms/profiles/profilemenu.dart';
 import 'package:cbms/profiles/profilepic.dart';
@@ -36,10 +37,17 @@ class Body extends StatelessWidget {
             icon: "assets/icons/Log out.svg",
             press: () {},
           ),
+          // ProfileMenu(
+          //   text: "Settings",
+          //   icon: "assets/icons/Log out.svg",
+          //   press: () {},
+          // ),
           ProfileMenu(
-            text: "Settings",
+            text: "Log out",
             icon: "assets/icons/Log out.svg",
-            press: () {},
+            press: () {
+              FirebaseAuth.instance.signOut();
+            },
           ),
         ],
       ),
