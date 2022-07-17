@@ -33,14 +33,16 @@ Future<dynamic> getData() async {
   print("expiry date ::: $expiryDate");
   print(curDate);
   // print(snapData);
-  return expiryDate as DateTime;
+  return snapData;
 }
+
+final renewalDays = expiryDate!.difference(curDate).inDays;
 
 class _viewPassState extends State<viewPass> {
   late bool status = false;
   verifyPass() {
-    print(expiryDate!.difference(curDate).inDays);
-    if (expiryDate!.difference(curDate).inDays < 5) {
+    print(renewalDays);
+    if (renewalDays < 5) {
       status = true;
       print("status is $status");
     } else {
@@ -69,16 +71,67 @@ class _viewPassState extends State<viewPass> {
 
                 // if we got our data
               } else if (snapshot.hasData) {
-                final data = snapshot.data as DateTime;
+                final data = snapshot.data as Map<String, dynamic>;
+                // print(data);
+                expiryDate = data['Expiry'].toDate();
 
                 return Scaffold(
                   body: Container(
                       child: Center(
-                          child: Column(
-                    children: [
-                      QrImage(data: user.uid, size: 120),
-                      verifyPass(),
-                    ],
+                          child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 30),
+                        QrImage(data: user.uid, size: 120),
+                        SizedBox(height: 50),
+                        Text("User ID  : " + user.uid),
+                        const Divider(
+                          height: 30,
+                          thickness: 0.5,
+                          indent: 0,
+                          endIndent: 0,
+                          color: Colors.grey,
+                        ),
+                        Text("Amount paid : " + data['amount']),
+                        const Divider(
+                          height: 30,
+                          thickness: 0.3,
+                          indent: 0,
+                          endIndent: 0,
+                          color: Colors.grey,
+                        ),
+                        Text("Issue date : " +
+                            data['purchase date'].toDate().toString()),
+                        const Divider(
+                          height: 40,
+                          thickness: 0.5,
+                          indent: 0,
+                          endIndent: 0,
+                          color: Colors.grey,
+                        ),
+                        Text("Expiry date : " +
+                            data['Expiry'].toDate().toString()),
+                        const Divider(
+                          height: 40,
+                          thickness: 0.5,
+                          indent: 0,
+                          endIndent: 0,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          "$renewalDays days left for renewal.",
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        SizedBox(height: 30),
+                        verifyPass(),
+                      ],
+                    ),
                   ))),
                 );
               }

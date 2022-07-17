@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import 'viewPass.dart';
@@ -166,7 +167,7 @@ class _ticketScreenState extends State<ticketScreen> {
                 print("Snapshot data ::: $data");
 
                 return Scaffold(
-                  backgroundColor: Color.fromARGB(255, 151, 0, 0),
+                  backgroundColor: Color.fromARGB(255, 0, 124, 103),
                   appBar: AppBar(
                     backgroundColor: Colors.transparent,
                   ),
@@ -206,7 +207,8 @@ class _ticketScreenState extends State<ticketScreen> {
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0))),
                                 errorStyle: TextStyle(
-                                    color: Colors.redAccent, fontSize: 15)),
+                                    color: Color.fromARGB(255, 255, 196, 0),
+                                    fontSize: 15)),
                             controller: amtController,
                           ),
                         ),
@@ -235,31 +237,40 @@ class _ticketScreenState extends State<ticketScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(11.0),
-                          child: Container(
+                          child: Card(
                             color: Colors.white,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Row(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    color: Colors.amber,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Amount : " + data['amount']),
-                                            SizedBox(height: 10),
-                                            Text("Ticket ID : " +
-                                                data['Payment ID']),
-                                            SizedBox(height: 10),
-                                            Text("Booking date : " +
-                                                purchaseDate.toString()),
-                                          ]),
-                                    ),
+                                  Text('Active ticket'),
+                                  SizedBox(height: 20),
+                                  Row(
+                                    children: [
+                                      Card(
+                                        color: Colors.amber,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Amount : " +
+                                                    data['amount']),
+                                                SizedBox(height: 10),
+                                                Text("Ticket ID : " +
+                                                    data['Payment ID']),
+                                                SizedBox(height: 10),
+                                                Text("Booking date : " +
+                                                    purchaseDate.toString()),
+                                              ]),
+                                        ),
+                                      ),
+                                      QrImage(data: user.uid, size: 70),
+                                    ],
                                   )
                                 ],
                               ),
