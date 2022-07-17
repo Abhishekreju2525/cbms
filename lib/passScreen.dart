@@ -1,6 +1,7 @@
 import 'package:cbms/BottomNavigationBar.dart';
 import 'package:cbms/adminDashboard.dart';
 import 'package:cbms/dashboardScreen.dart';
+import 'package:cbms/payment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,16 @@ class _passScreenState extends State<passScreen> {
                   return viewPass();
                 else
                   return Center(
-                    child: Text('No active pass found!'),
+                    child: Column(
+                      children: [
+                        Text('No active pass found!'),
+                        ElevatedButton(
+                            onPressed: () {
+                              paymentPage();
+                            },
+                            child: Text('Renew now')),
+                      ],
+                    ),
                   );
               }
             }

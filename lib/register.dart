@@ -65,6 +65,11 @@ class _registerScreen extends State<registerScreen> {
         .doc(user.uid)
         .set({'status': 'false'}).onError(
             (e, _) => print("Error writing document: $e"));
+    FirebaseFirestore.instance
+        .collection("ticket_data")
+        .doc(user.uid)
+        .set({'status': 'false'}).onError(
+            (e, _) => print("Error writing document: $e"));
   }
 
   @override
