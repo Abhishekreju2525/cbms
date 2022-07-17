@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'loginScreen.dart';
 import 'dashboardScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);

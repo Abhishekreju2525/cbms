@@ -17,11 +17,10 @@ class paymentPage extends StatefulWidget {
 
 class _paymentPageState extends State<paymentPage> {
   final user = FirebaseAuth.instance.currentUser!;
-  final cdate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  final cdate = DateTime.now();
 
   // final newdate = DateFormat("yyyy-MM-dd").format(DateTime.now().add(months:5));
-  final newdate =
-      DateFormat("yyyy-MM-dd").format(DateTime.now().add(Duration(days: 365)));
+  final newdate = DateTime.now().add(Duration(days: 365));
   late Razorpay _razorpay;
 
   TextEditingController amtController = TextEditingController();
@@ -47,7 +46,7 @@ class _paymentPageState extends State<paymentPage> {
         msg: "Payment successful" + response.paymentId!,
         toastLength: Toast.LENGTH_SHORT);
 
-    final successpasstransactions = <String, String>{
+    final successpasstransactions = <String, dynamic>{
       "email": user.email!,
       "Payment ID": response.paymentId!,
       "Date": cdate,

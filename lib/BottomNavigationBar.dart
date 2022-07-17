@@ -1,6 +1,8 @@
 import 'package:cbms/dashboardScreen.dart';
 import 'package:cbms/passScreen.dart';
 import 'package:cbms/profiles/profile.dart';
+import 'package:cbms/ticketPayment.dart';
+import 'package:cbms/ticketScreen.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
@@ -16,7 +18,7 @@ class _HomepageState extends State<Homepage> {
   final pages = [
     dashboardScreen(),
     passScreen(),
-    dashboardScreen(),
+    ticketScreen(),
     profile(),
   ];
 
