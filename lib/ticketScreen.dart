@@ -16,13 +16,34 @@ class ticketScreen extends StatefulWidget {
 }
 
 class _ticketScreenState extends State<ticketScreen> {
+  TextEditingController amtController = TextEditingController();
   final cdate = DateTime.now();
+  final curDate = DateTime.now();
+  DateTime? purchaseDate;
+
+  final DocumentReference<Map<String, dynamic>> _docRef =
+      FirebaseFirestore.instance.collection('ticket_data').doc(user.uid);
 
   // final newdate = DateFormat("yyyy-MM-dd").format(DateTime.now().add(months:5));
 
   late Razorpay _razorpay;
 
-  TextEditingController amtController = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _razorpay.clear();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
 
   void openCheckout(amount) async {
     amount = amount * 100;
@@ -38,6 +59,21 @@ class _ticketScreenState extends State<ticketScreen> {
     } catch (e) {
       debugPrint('Error : e');
     }
+  }
+
+  Future<dynamic> getData() {
+    return Future.delayed(Duration(seconds: 0), () async {
+      DocumentSnapshot docSnap = await _docRef.get();
+
+      // Get data from docs and convert map to List
+      final snapData = docSnap.data() as Map<String, dynamic>;
+      purchaseDate = snapData['purchase date'].toDate();
+      // print('role : $role');
+      print("purchase date ::: $purchaseDate");
+      print("current date :::$curDate");
+      // print(snapData);
+      return snapData;
+    });
   }
 
   ticketScreen _handlePaymentSuccess(PaymentSuccessResponse response) {
@@ -106,42 +142,6 @@ class _ticketScreenState extends State<ticketScreen> {
     Fluttertoast.showToast(
         msg: "external wallet" + response.walletName!,
         toastLength: Toast.LENGTH_SHORT);
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _razorpay.clear();
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-  }
-
-  final DocumentReference<Map<String, dynamic>> _docRef =
-      FirebaseFirestore.instance.collection('ticket_data').doc(user.uid);
-  final curDate = DateTime.now();
-  DateTime? purchaseDate;
-  Future<dynamic> getData() {
-    return Future.delayed(Duration(seconds: 0), () async {
-      DocumentSnapshot docSnap = await _docRef.get();
-
-      // Get data from docs and convert map to List
-      final snapData = docSnap.data() as Map<String, dynamic>;
-      purchaseDate = snapData['purchase date'].toDate();
-      // print('role : $role');
-      print("purchase date ::: $purchaseDate");
-      print("current date :::$curDate");
-      // print(snapData);
-      return snapData;
-    });
   }
 
   @override
