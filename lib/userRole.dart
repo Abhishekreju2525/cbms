@@ -1,6 +1,5 @@
 import 'package:cbms/BottomNavigationBar.dart';
-import 'package:cbms/adminDashboard.dart';
-import 'package:cbms/dashboardScreen.dart';
+import 'package:cbms/adminbotnav.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +60,7 @@ class _userRoleState extends State<userRole> {
                 if (data == 'user')
                   return Homepage();
                 else
-                  return adminDash();
+                  return Adminpage();
               }
             }
 
@@ -82,7 +81,7 @@ class _userRoleState extends State<userRole> {
       return Homepage();
     } else if (data == 'admin') {
       print('routed to admin');
-      return adminDash();
+      return Adminpage();
     } else {
       return Text('Invalid authentication');
     }
