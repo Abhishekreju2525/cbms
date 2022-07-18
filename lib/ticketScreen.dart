@@ -16,15 +16,17 @@ class ticketScreen extends StatefulWidget {
 }
 
 final user = FirebaseAuth.instance.currentUser!;
+final user1 = FirebaseAuth.instance.currentUser!;
 
 class _ticketScreenState extends State<ticketScreen> {
+  var ticketpaymentDone;
   TextEditingController amtController = TextEditingController();
   final cdate = DateTime.now();
   final curDate = DateTime.now();
   DateTime? purchaseDate;
-
+  final user = FirebaseAuth.instance.currentUser!;
   final DocumentReference<Map<String, dynamic>> _docRef =
-      FirebaseFirestore.instance.collection('ticket_data').doc(user.uid);
+      FirebaseFirestore.instance.collection('ticket_data').doc(user1.uid);
 
   // final newdate = DateFormat("yyyy-MM-dd").format(DateTime.now().add(months:5));
 
@@ -64,6 +66,10 @@ class _ticketScreenState extends State<ticketScreen> {
   }
 
   Future<dynamic> getData() {
+    final user = FirebaseAuth.instance.currentUser!;
+    final DocumentReference<Map<String, dynamic>> _docRef =
+        FirebaseFirestore.instance.collection('ticket_data').doc(user.uid);
+    print("user uid first is :::" + user.uid);
     return Future.delayed(Duration(seconds: 0), () async {
       DocumentSnapshot docSnap = await _docRef.get();
 
@@ -78,7 +84,8 @@ class _ticketScreenState extends State<ticketScreen> {
     });
   }
 
-  ticketScreen _handlePaymentSuccess(PaymentSuccessResponse response) {
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    final user = FirebaseAuth.instance.currentUser!;
     Fluttertoast.showToast(
         msg: "Payment successful" + response.paymentId!,
         toastLength: Toast.LENGTH_SHORT);
@@ -130,17 +137,20 @@ class _ticketScreenState extends State<ticketScreen> {
         .doc(user.uid)
         .set(ticketStatusData)
         .onError((e, _) => print("Error writing document: $e"));
-
-    return ticketScreen();
+    setState(() {
+      ticketpaymentDone = true;
+    });
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
+    final user = FirebaseAuth.instance.currentUser!;
     Fluttertoast.showToast(
         msg: "Payment fail" + response.message!,
         toastLength: Toast.LENGTH_SHORT);
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
+    final user = FirebaseAuth.instance.currentUser!;
     Fluttertoast.showToast(
         msg: "external wallet" + response.walletName!,
         toastLength: Toast.LENGTH_SHORT);
@@ -148,6 +158,10 @@ class _ticketScreenState extends State<ticketScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (ticketpaymentDone == true) {
+      ticketpaymentDone = false;
+      return ticketScreen();
+    }
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder(

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cbms/payment.dart';
+import 'package:cbms/ticketScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,40 +17,53 @@ class viewPass extends StatefulWidget {
   State<viewPass> createState() => _viewPassState();
 }
 
-final user = FirebaseAuth.instance.currentUser!;
 DateTime? expiryDate;
+
 final curDate = DateTime.now();
-
-DocumentReference<Map<String, dynamic>> _docRef =
-    FirebaseFirestore.instance.collection('pass_data').doc(user.uid);
-
-Future<dynamic> getData() async {
-  // Get docs from collection reference
-  DocumentSnapshot docSnap = await _docRef.get();
-
-  // Get data from docs and convert map to List
-  final snapData = docSnap.data() as Map<String, dynamic>;
-  expiryDate = snapData['Expiry'].toDate();
-  print("expiry date ::: $expiryDate");
-  print(curDate);
-  // print(snapData);
-  return snapData;
-}
-
-final renewalDays = expiryDate!.difference(curDate).inDays;
+final user = FirebaseAuth.instance.currentUser!;
 
 class _viewPassState extends State<viewPass> {
-  late bool status = false;
+  Future<dynamic> getData() async {
+    final user = FirebaseAuth.instance.currentUser!;
+    DocumentReference<Map<String, dynamic>> _docRef =
+        FirebaseFirestore.instance.collection('pass_data').doc(user.uid);
+    DocumentSnapshot docSnap = await _docRef.get();
+
+    // Get data from docs and convert map to List
+    final sData = docSnap.data() as Map<String, dynamic>;
+    expiryDate = sData['Expiry'].toDate();
+
+    print("expiry date ::: $expiryDate");
+    print(curDate);
+
+    return sData;
+  }
+
+  final renewalDays = expiryDate!.difference(curDate).inDays;
+
+  late bool status = true;
+
   verifyPass() {
-    print(renewalDays);
+    // print(renewalDays);
     if (renewalDays < 5) {
-      status = true;
+      status = false;
       print("status is $status");
     } else {
-      status = false;
+      status = true;
+      print("status is $status");
     }
+    print(status);
+
     return ElevatedButton(
-        onPressed: status ? () => () {} : null, child: Text('Renew now'));
+        onPressed: status
+            ? () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const paymentPage()),
+                );
+              }
+            : null,
+        child: Text('Renew now'));
   }
 
   @override
@@ -57,23 +71,25 @@ class _viewPassState extends State<viewPass> {
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder(
-          builder: (ctx, snapshot) {
+          builder: (ctx, dsnap) {
             // Checking if future is resolved or not
-            if (snapshot.connectionState == ConnectionState.done) {
+            if (dsnap.connectionState == ConnectionState.done) {
+              final user = FirebaseAuth.instance.currentUser!;
               // If we got an error
-              if (snapshot.hasError) {
+              if (dsnap.hasError) {
+                final user = FirebaseAuth.instance.currentUser!;
                 return Center(
                   child: Text(
-                    '${snapshot.error} occurred',
+                    '${dsnap.error} occurred',
                     style: TextStyle(fontSize: 18),
                   ),
                 );
 
                 // if we got our data
-              } else if (snapshot.hasData) {
-                final data = snapshot.data as Map<String, dynamic>;
+              } else if (dsnap.hasData) {
+                final user = FirebaseAuth.instance.currentUser!;
+                final data = dsnap.data as Map<String, dynamic>;
                 // print(data);
-                expiryDate = data['Expiry'].toDate();
 
                 return Scaffold(
                   body: Container(
@@ -102,8 +118,8 @@ class _viewPassState extends State<viewPass> {
                           endIndent: 0,
                           color: Colors.grey,
                         ),
-                        Text("Issue date : " +
-                            data['purchase date'].toDate().toString()),
+                        Text(
+                            "Issue date : " + data['purchase date'].toString()),
                         const Divider(
                           height: 40,
                           thickness: 0.5,
@@ -111,8 +127,7 @@ class _viewPassState extends State<viewPass> {
                           endIndent: 0,
                           color: Colors.grey,
                         ),
-                        Text("Expiry date : " +
-                            data['Expiry'].toDate().toString()),
+                        Text("Expiry date : " + data['Expiry'].toString()),
                         const Divider(
                           height: 40,
                           thickness: 0.5,

@@ -1,3 +1,4 @@
+import 'package:cbms/passScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -16,6 +17,7 @@ class paymentPage extends StatefulWidget {
 }
 
 class _paymentPageState extends State<paymentPage> {
+  bool paymentDone = false;
   final user = FirebaseAuth.instance.currentUser!;
   final cdate = DateTime.now();
 
@@ -95,6 +97,9 @@ class _paymentPageState extends State<paymentPage> {
         .doc(user.uid)
         .update(passStatusData)
         .onError((e, _) => print("Error writing document: $e"));
+    setState(() {
+      paymentDone = true;
+    });
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -128,71 +133,77 @@ class _paymentPageState extends State<paymentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 15, 58, 89),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 100,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Buy bus pass here',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextFormField(
-                cursorColor: Colors.white,
-                autofocus: false,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                    labelText: 'Enter amount to be paid',
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    errorStyle:
-                        TextStyle(color: Colors.redAccent, fontSize: 15)),
-                controller: amtController,
-              ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (amtController.text.toString().isNotEmpty) {
-                  setState(() {
-                    int amount = int.parse(amtController.text.toString());
-                    openCheckout(amount);
-                  });
-                }
-              },
-              child: Padding(
-                padding: EdgeInsets.all(9.0),
-                child: Text('Make payment'),
-              ),
-              style: ElevatedButton.styleFrom(primary: Colors.green),
-            )
-          ],
+    if (paymentDone == true) {
+      paymentDone = false;
+      return passScreen();
+    } else {
+      return Scaffold(
+        backgroundColor: Color.fromARGB(255, 15, 58, 89),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 100,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Buy bus pass here',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextFormField(
+                  cursorColor: Colors.white,
+                  autofocus: false,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      labelText: 'Enter amount to be paid',
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      errorStyle:
+                          TextStyle(color: Colors.redAccent, fontSize: 15)),
+                  controller: amtController,
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (amtController.text.toString().isNotEmpty) {
+                    setState(() {
+                      int amount = int.parse(amtController.text.toString());
+                      openCheckout(amount);
+                    });
+                  }
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(9.0),
+                  child: Text('Make payment'),
+                ),
+                style: ElevatedButton.styleFrom(primary: Colors.green),
+              )
+            ],
+          ),
+        ),
+      );
+    }
   }
 }

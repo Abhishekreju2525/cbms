@@ -2,6 +2,7 @@ import 'package:cbms/dashboardScreen.dart';
 import 'package:cbms/passScreen.dart';
 import 'package:cbms/profiles/profile.dart';
 import 'package:cbms/ticketScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
@@ -10,6 +11,8 @@ class Homepage extends StatefulWidget {
   @override
   State<Homepage> createState() => _HomepageState();
 }
+
+final user = FirebaseAuth.instance.currentUser!;
 
 class _HomepageState extends State<Homepage> {
   int _pageIndex = 0;
@@ -23,6 +26,7 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    // print("Firebase user data :: $user.email");
     return Scaffold(
       body: pages[_pageIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -42,6 +46,12 @@ class _HomepageState extends State<Homepage> {
               icon: Icon(Icons.confirmation_number), label: 'Ticket'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          FirebaseAuth.instance.signOut();
+        },
+        child: Text('Sign out'),
       ),
     );
   }

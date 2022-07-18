@@ -126,13 +126,13 @@ class _dashboardScreenState extends State<dashboardScreen> {
               color: Colors.greenAccent,
               child: Text('Payment'),
             ),
-            MaterialButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              color: Colors.amber,
-              child: Text('Sign out'),
-            ),
+            // MaterialButton(
+            //   onPressed: () {
+            //     FirebaseAuth.instance.signOut();
+            //   },
+            //   color: Colors.amber,
+            //   child: Text('Sign out'),
+            // ),
           ],
         ),
       ),

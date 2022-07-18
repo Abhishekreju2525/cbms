@@ -71,7 +71,11 @@ class _passScreenState extends State<passScreen> {
                         Text('No active pass found!'),
                         ElevatedButton(
                             onPressed: () {
-                              paymentPage();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const paymentPage()),
+                              );
                             },
                             child: Text('Renew now')),
                       ],
