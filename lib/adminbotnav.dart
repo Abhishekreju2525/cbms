@@ -1,4 +1,5 @@
 import 'package:cbms/adminDashboard.dart';
+import 'package:cbms/adminpage/adminpage.dart';
 import 'package:cbms/adminprofile.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _AdminpageState extends State<Adminpage> {
     adminDash(),
     AdminProf(),
     adminDash(),
-    adminDash(),
+    AdminPage(),
   ];
 
   @override

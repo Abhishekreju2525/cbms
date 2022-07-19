@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cbms/loginScreen.dart';
 import 'package:cbms/main.dart';
 import 'package:cbms/register.dart';
