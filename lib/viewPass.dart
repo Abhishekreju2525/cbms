@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
 import 'BottomNavigationBar.dart';
 import 'adminDashboard.dart';
 
@@ -24,19 +23,21 @@ final user = FirebaseAuth.instance.currentUser!;
 
 class _viewPassState extends State<viewPass> {
   Future<dynamic> getData() async {
-    final user = FirebaseAuth.instance.currentUser!;
-    DocumentReference<Map<String, dynamic>> _docRef =
-        FirebaseFirestore.instance.collection('pass_data').doc(user.uid);
-    DocumentSnapshot docSnap = await _docRef.get();
+    return Future.delayed(Duration(seconds: 1), () async {
+      final user = FirebaseAuth.instance.currentUser!;
+      DocumentReference<Map<String, dynamic>> _docRef =
+          FirebaseFirestore.instance.collection('pass_data').doc(user.uid);
+      DocumentSnapshot docSnap = await _docRef.get();
 
-    // Get data from docs and convert map to List
-    final sData = docSnap.data() as Map<String, dynamic>;
-    expiryDate = sData['Expiry'].toDate();
+      // Get data from docs and convert map to List
+      final sData = docSnap.data() as Map<String, dynamic>;
+      expiryDate = sData['Expiry'].toDate();
 
-    print("expiry date ::: $expiryDate");
-    print(curDate);
+      print("expiry date ::: $expiryDate");
+      print(curDate);
 
-    return sData;
+      return sData;
+    });
   }
 
   final renewalDays = expiryDate!.difference(curDate).inDays;
