@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cbms/payment.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:uuid/uuid.dart';
@@ -116,16 +117,34 @@ class _dashboardScreenState extends State<dashboardScreen> {
                 ],
               ),
             ),
-            MaterialButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const paymentPage()),
-                );
-              },
-              color: Colors.greenAccent,
-              child: Text('Payment'),
-            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(11.0),
+              child: Card(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Card(
+                            color: Color.fromARGB(255, 255, 224, 131),
+                            child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('Scan QR to verify E-Pass')),
+                          ),
+                          QrImage(data: user.uid, size: 80),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
+
             // MaterialButton(
             //   onPressed: () {
             //     FirebaseAuth.instance.signOut();

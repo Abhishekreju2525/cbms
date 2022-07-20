@@ -20,7 +20,7 @@ class _paymentPageState extends State<paymentPage> {
   bool paymentDone = false;
   final user = FirebaseAuth.instance.currentUser!;
   final cdate = DateTime.now();
-  final _list = ['Apple', 'orange', 'pineapple'];
+
   // final newdate = DateFormat("yyyy-MM-dd").format(DateTime.now().add(months:5));
   final newdate = DateTime.now().add(Duration(days: 365));
   late Razorpay _razorpay;
@@ -44,7 +44,6 @@ class _paymentPageState extends State<paymentPage> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    final user = FirebaseAuth.instance.currentUser!;
     Fluttertoast.showToast(
         msg: "Payment successful" + response.paymentId!,
         toastLength: Toast.LENGTH_SHORT);
@@ -115,18 +114,6 @@ class _paymentPageState extends State<paymentPage> {
         toastLength: Toast.LENGTH_SHORT);
   }
 
-  final List<String> _docIDs = [];
-
-  Future getDocId() async {
-    await FirebaseFirestore.instance
-        .collection('fees')
-        .get()
-        .then((snapshot) => snapshot.docs.forEach((document) {
-              print(document.reference);
-              _docIDs.add(document.reference.id);
-            }));
-  }
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -137,7 +124,6 @@ class _paymentPageState extends State<paymentPage> {
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -145,7 +131,6 @@ class _paymentPageState extends State<paymentPage> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
-  String? location;
   @override
   Widget build(BuildContext context) {
     if (paymentDone == true) {
@@ -153,43 +138,72 @@ class _paymentPageState extends State<paymentPage> {
       return passScreen();
     } else {
       return Scaffold(
-          body: Center(
-        child: Container(
-            child: Center(
-                child: Padding(
-          padding: const EdgeInsets.all(20.0),
+        backgroundColor: Color.fromARGB(255, 15, 58, 89),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+        ),
+        body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Hi everyone'),
-              FutureBuilder(
-                  future: getDocId(),
-                  builder: ((context, snapshot) {
-                    return Container(
-                      child: DropdownButtonFormField(
-                          hint: Text("Choose your pickup/drop point "),
-                          items: _docIDs.map((e) {
-                            return DropdownMenuItem(value: e, child: Text(e));
-                          }).toList(),
-                          onChanged: (value) {
-                            print(value);
-                            location = value as String?;
-                            print("location is " + location!);
-                          }),
-                    );
-                  }))
+              SizedBox(
+                height: 100,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Buy bus pass here',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextFormField(
+                  cursorColor: Colors.white,
+                  autofocus: false,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      labelText: 'Enter amount to be paid',
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      errorStyle:
+                          TextStyle(color: Colors.redAccent, fontSize: 15)),
+                  controller: amtController,
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (amtController.text.toString().isNotEmpty) {
+                    setState(() {
+                      int amount = int.parse(amtController.text.toString());
+                      openCheckout(amount);
+                    });
+                  }
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(9.0),
+                  child: Text('Make payment'),
+                ),
+                style: ElevatedButton.styleFrom(primary: Colors.green),
+              )
             ],
           ),
-        ))),
-      )
-
-          // if we got our data
-
-          );
-
-      // Displaying LoadingSpinner to indicate waiting state
-
+        ),
+      );
     }
   }
 }

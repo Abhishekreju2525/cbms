@@ -42,15 +42,16 @@ class _viewPassState extends State<viewPass> {
 
   final renewalDays = expiryDate!.difference(curDate).inDays;
 
-  late bool status = true;
+  late bool status = false;
 
   verifyPass() {
+    final curDate = DateTime.now();
     // print(renewalDays);
     if (renewalDays < 5) {
-      status = false;
+      status = true;
       print("status is $status");
     } else {
-      status = true;
+      status = false;
       print("status is $status");
     }
     print(status);
@@ -93,6 +94,9 @@ class _viewPassState extends State<viewPass> {
                 // print(data);
 
                 return Scaffold(
+                  appBar: AppBar(
+                    title: Text('E-pass'),
+                  ),
                   body: Container(
                       child: Center(
                           child: Padding(
