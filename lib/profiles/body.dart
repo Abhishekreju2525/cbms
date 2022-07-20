@@ -1,3 +1,4 @@
+import 'package:cbms/edit_user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cbms/profiles/profilemenu.dart';
@@ -10,12 +11,15 @@ class Body extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          ProfilePic(),
+          // ProfilePic(),
           SizedBox(height: 20),
           ProfileMenu(
             text: "View/edit profile",
             icon: "MdiIcons.sword",
-            press: () => {},
+            press: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => editProfile()))
+            },
           ),
           ProfileMenu(
             text: "Purchase history",

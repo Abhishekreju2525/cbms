@@ -1,3 +1,4 @@
+import 'package:cbms/edit_user_profile.dart';
 import 'package:flutter/material.dart';
 
 class AdminPageMenu extends StatelessWidget {
@@ -13,7 +14,7 @@ class AdminPageMenu extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AdminPageMenu()));
+                      MaterialPageRoute(builder: (context) => editProfile()));
                 },
                 child: Container(
                   padding: const EdgeInsets.all(15),
@@ -26,7 +27,7 @@ class AdminPageMenu extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.person,
-                        size: 30,
+                        size: 23,
                         color: Colors.white,
                       ),
                       Padding(
@@ -35,7 +36,7 @@ class AdminPageMenu extends StatelessWidget {
                       Expanded(
                           child: Text(
                         "View/edit profile",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       )),
                     ],
                   ),
@@ -57,7 +58,7 @@ class AdminPageMenu extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.group,
-                        size: 20,
+                        size: 23,
                         color: Colors.white,
                       ),
                       Padding(
@@ -66,7 +67,7 @@ class AdminPageMenu extends StatelessWidget {
                       Expanded(
                           child: Text(
                         "Contact us",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       )),
                     ],
                   ),
@@ -78,6 +79,7 @@ class AdminPageMenu extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => AdminPageMenu()));
                 },
                 child: Container(
+                  
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -88,7 +90,7 @@ class AdminPageMenu extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.group,
-                        size: 20,
+                        size: 23,
                         color: Colors.white,
                       ),
                       Padding(
@@ -97,7 +99,7 @@ class AdminPageMenu extends StatelessWidget {
                       Expanded(
                           child: Text(
                         "Notifications",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       )),
                     ],
                   ),
@@ -119,7 +121,7 @@ class AdminPageMenu extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.settings,
-                        size: 20,
+                        size: 23,
                         color: Colors.white,
                       ),
                       Padding(
@@ -128,7 +130,7 @@ class AdminPageMenu extends StatelessWidget {
                       Expanded(
                           child: Text(
                         "Settings",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       )),
                     ],
                   ),
@@ -150,7 +152,7 @@ class AdminPageMenu extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.group,
-                        size: 20,
+                        size: 23,
                         color: Colors.white,
                       ),
                       Padding(
@@ -159,7 +161,7 @@ class AdminPageMenu extends StatelessWidget {
                       Expanded(
                           child: Text(
                         "Logout",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       )),
                     ],
                   ),

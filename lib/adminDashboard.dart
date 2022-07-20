@@ -2,6 +2,7 @@ import 'package:cbms/payment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:restart_app/restart_app.dart';
 
 class adminDash extends StatefulWidget {
@@ -17,7 +18,7 @@ class _adminDashState extends State<adminDash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Color.fromARGB(255, 205, 222, 255),
       body: SafeArea(
         child: Column(
           children: [
@@ -32,12 +33,12 @@ class _adminDashState extends State<adminDash> {
             // ),
             //app bar
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 25),
                       SizedBox(height: 25),
@@ -45,6 +46,50 @@ class _adminDashState extends State<adminDash> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18)),
                       SizedBox(height: 20),
+                      Text(
+                        'User ID :' + user.uid,
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      SizedBox(height: 50),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Card(
+                                      color: Color.fromARGB(255, 255, 197, 226),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(height: 10),
+                                              Text(
+                                                  "Tap here to scan & verify E-pass/ticket"),
+                                              SizedBox(height: 10),
+                                            ]),
+                                      ),
+                                    ),
+                                    Icon(Icons.qr_code_scanner),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   //profile picture
@@ -60,15 +105,6 @@ class _adminDashState extends State<adminDash> {
             SizedBox(height: 25),
 
             //horizontal listview
-
-            MaterialButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                FirebaseFirestore.instance.clearPersistence();
-              },
-              color: Colors.amber,
-              child: Text('Sign out'),
-            ),
           ],
         ),
       ),

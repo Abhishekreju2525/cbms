@@ -1,6 +1,9 @@
 import 'package:cbms/adminDashboard.dart';
 import 'package:cbms/adminpage/adminpage.dart';
 import 'package:cbms/adminprofile.dart';
+import 'package:cbms/historyView.dart';
+import 'package:cbms/passhistory.dart';
+import 'package:cbms/tickethistory.dart';
 import 'package:flutter/material.dart';
 
 class Adminpage extends StatefulWidget {
@@ -16,7 +19,7 @@ class _AdminpageState extends State<Adminpage> {
   final pages = [
     adminDash(),
     AdminProf(),
-    adminDash(),
+    historyView(),
     AdminPage(),
   ];
 

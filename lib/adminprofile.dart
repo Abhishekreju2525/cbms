@@ -1,4 +1,11 @@
+import 'package:cbms/addBus.dart';
+import 'package:cbms/busView.dart';
+import 'package:cbms/staffView.dart';
+import 'package:cbms/studentView.dart';
+import 'package:cbms/driverView.dart';
 import 'package:flutter/material.dart';
+
+import 'driverView.dart';
 
 class AdminProf extends StatefulWidget {
   const AdminProf({Key? key}) : super(key: key);
@@ -24,7 +31,7 @@ class _AdminProfState extends State<AdminProf> {
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AdminProf()));
+                      MaterialPageRoute(builder: (context) => studentView()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -41,7 +48,7 @@ class _AdminProfState extends State<AdminProf> {
                       ),
                       Text(
                         "Student",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),
@@ -50,7 +57,7 @@ class _AdminProfState extends State<AdminProf> {
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AdminProf()));
+                      MaterialPageRoute(builder: (context) => staffView()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -67,7 +74,7 @@ class _AdminProfState extends State<AdminProf> {
                       ),
                       Text(
                         "Staff",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),
@@ -76,7 +83,7 @@ class _AdminProfState extends State<AdminProf> {
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AdminProf()));
+                      MaterialPageRoute(builder: (context) => driverView()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -93,7 +100,7 @@ class _AdminProfState extends State<AdminProf> {
                       ),
                       Text(
                         "Driver",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),
@@ -102,7 +109,7 @@ class _AdminProfState extends State<AdminProf> {
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AdminProf()));
+                      MaterialPageRoute(builder: (context) => addBus()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -119,7 +126,7 @@ class _AdminProfState extends State<AdminProf> {
                       ),
                       Text(
                         "Route",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),
@@ -128,12 +135,12 @@ class _AdminProfState extends State<AdminProf> {
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AdminProf()));
+                      MaterialPageRoute(builder: (context) => busView()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.yellowAccent[100],
+                    color: Color.fromARGB(255, 233, 233, 153),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -145,7 +152,7 @@ class _AdminProfState extends State<AdminProf> {
                       ),
                       Text(
                         "Bus",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),
@@ -171,7 +178,7 @@ class _AdminProfState extends State<AdminProf> {
                       ),
                       Text(
                         "Fines/Dues",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),
@@ -180,9 +187,9 @@ class _AdminProfState extends State<AdminProf> {
             ],
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 40,
-                childAspectRatio: (1 / .31)),
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 20,
+                childAspectRatio: (1 / 0.90)),
           ),
         ),
       ),
