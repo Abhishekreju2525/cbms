@@ -47,12 +47,12 @@ class _HomepageState extends State<Homepage> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          FirebaseAuth.instance.signOut();
-        },
-        child: Text('Sign out'),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     FirebaseAuth.instance.signOut();
+      //   },
+      //   child: Text('Sign out'),
+      // ),
     );
   }
 }
