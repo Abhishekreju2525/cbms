@@ -126,6 +126,8 @@ class _passScreenState extends State<passScreen> {
                               // print(data);
 
                               return Scaffold(
+                                backgroundColor:
+                                    Color.fromARGB(255, 255, 226, 226),
                                 body: Container(
                                     child: Center(
                                         child: Padding(

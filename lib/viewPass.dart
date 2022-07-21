@@ -72,6 +72,7 @@ class _viewPassState extends State<viewPass> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color.fromARGB(255, 234, 171, 192),
         body: FutureBuilder(
           builder: (ctx, dsnap) {
             // Checking if future is resolved or not
@@ -94,65 +95,64 @@ class _viewPassState extends State<viewPass> {
                 // print(data);
 
                 return Scaffold(
-                  appBar: AppBar(
-                    title: Text('E-pass'),
-                  ),
+                  backgroundColor: Color.fromARGB(255, 234, 171, 192),
                   body: Container(
+                      color: Color.fromARGB(255, 248, 202, 217),
                       child: Center(
                           child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 30),
-                        QrImage(data: user.uid, size: 120),
-                        SizedBox(height: 50),
-                        Text("User ID  : " + user.uid),
-                        const Divider(
-                          height: 30,
-                          thickness: 0.5,
-                          indent: 0,
-                          endIndent: 0,
-                          color: Colors.grey,
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 30),
+                            QrImage(data: user.uid, size: 120),
+                            SizedBox(height: 50),
+                            Text("User ID  : " + user.uid),
+                            const Divider(
+                              height: 30,
+                              thickness: 0.5,
+                              indent: 0,
+                              endIndent: 0,
+                              color: Colors.grey,
+                            ),
+                            Text("Amount paid : " + data['amount']),
+                            const Divider(
+                              height: 30,
+                              thickness: 0.3,
+                              indent: 0,
+                              endIndent: 0,
+                              color: Colors.grey,
+                            ),
+                            Text("Issue date : " +
+                                data['purchase date'].toString()),
+                            const Divider(
+                              height: 40,
+                              thickness: 0.5,
+                              indent: 0,
+                              endIndent: 0,
+                              color: Colors.grey,
+                            ),
+                            Text("Expiry date : " + data['Expiry'].toString()),
+                            const Divider(
+                              height: 40,
+                              thickness: 0.5,
+                              indent: 0,
+                              endIndent: 0,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 30),
+                            Text(
+                              "$renewalDays days left for renewal.",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            ),
+                            SizedBox(height: 30),
+                            verifyPass(),
+                          ],
                         ),
-                        Text("Amount paid : " + data['amount']),
-                        const Divider(
-                          height: 30,
-                          thickness: 0.3,
-                          indent: 0,
-                          endIndent: 0,
-                          color: Colors.grey,
-                        ),
-                        Text(
-                            "Issue date : " + data['purchase date'].toString()),
-                        const Divider(
-                          height: 40,
-                          thickness: 0.5,
-                          indent: 0,
-                          endIndent: 0,
-                          color: Colors.grey,
-                        ),
-                        Text("Expiry date : " + data['Expiry'].toString()),
-                        const Divider(
-                          height: 40,
-                          thickness: 0.5,
-                          indent: 0,
-                          endIndent: 0,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(height: 30),
-                        Text(
-                          "$renewalDays days left for renewal.",
-                          style: TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                        SizedBox(height: 30),
-                        verifyPass(),
-                      ],
-                    ),
-                  ))),
+                      ))),
                 );
               }
             }

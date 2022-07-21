@@ -1,4 +1,5 @@
 import 'package:cbms/edit_user_profile.dart';
+import 'package:cbms/finePayment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cbms/profiles/profilemenu.dart';
@@ -29,7 +30,10 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Fines & dues",
             icon: "assets/icons/Settings.svg",
-            press: () {},
+            press: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => fineScreen()));
+            },
           ),
           ProfileMenu(
             text: "View routes & buses",

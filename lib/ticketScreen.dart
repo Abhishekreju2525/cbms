@@ -184,7 +184,7 @@ class _ticketScreenState extends State<ticketScreen> {
                 print("Snapshot data ::: $data");
                 if (data['status'] == "true") {
                   return Scaffold(
-                    backgroundColor: Color.fromARGB(255, 248, 248, 248),
+                    backgroundColor: Color.fromARGB(255, 203, 211, 238),
                     body: SingleChildScrollView(
                       child: Column(
                         children: [
