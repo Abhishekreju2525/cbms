@@ -211,14 +211,29 @@ class _passScreenState extends State<passScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            'Buy bus ticket hesre',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 53, 53, 53),
-                                fontSize: 38,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
+                          Center(
+                            child: Text(
+                              'Buy bus ticket here',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 53, 53, 53),
+                                  fontSize: 38,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
+                          Center(
+                            child: Text('No active pass found'),
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const paymentPage()),
+                                );
+                              },
+                              child: Text('Renew now'))
                         ],
                       ),
                     ),

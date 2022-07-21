@@ -1,4 +1,5 @@
 import 'package:cbms/edit_user_profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AdminPageMenu extends StatelessWidget {
@@ -79,7 +80,6 @@ class AdminPageMenu extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => AdminPageMenu()));
                 },
                 child: Container(
-                  
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -138,8 +138,7 @@ class AdminPageMenu extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AdminPageMenu()));
+                  FirebaseAuth.instance.signOut();
                 },
                 child: Container(
                   padding: const EdgeInsets.all(15),
