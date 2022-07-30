@@ -8,8 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-import 'viewPass.dart';
-
 class ticketScreen extends StatefulWidget {
   @override
   State<ticketScreen> createState() => _ticketScreenState();

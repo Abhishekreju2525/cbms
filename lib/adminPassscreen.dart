@@ -5,11 +5,15 @@ import 'package:cbms/payment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner/src/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class passScreen extends StatefulWidget {
+class adminpassScreen extends StatefulWidget {
+  String scanUID;
+  adminpassScreen(this.scanUID, QRViewController controller);
+
   @override
-  State<passScreen> createState() => _passScreenState();
+  State<adminpassScreen> createState() => _adminpassScreenState();
 }
 
 DateTime? expiryDate;
@@ -17,14 +21,18 @@ DateTime? expiryDate;
 final curDate = DateTime.now();
 final user = FirebaseAuth.instance.currentUser!;
 
-class _passScreenState extends State<passScreen> {
-  final renewalDays = expiryDate?.difference(curDate).inDays;
-
+class _adminpassScreenState extends State<adminpassScreen> {
   late bool status = true;
+
+  String get scanUID => widget.scanUID;
+
+  get renewalDays => null;
+
   Future<dynamic> getpassData() async {
-    final user = FirebaseAuth.instance.currentUser!;
+    print("success : $scanUID");
+
     DocumentReference<Map<String, dynamic>> _docRef =
-        await FirebaseFirestore.instance.collection('pass_data').doc(user.uid);
+        await FirebaseFirestore.instance.collection('pass_data').doc(scanUID);
     DocumentSnapshot docSnap = await _docRef.get();
 
     // Get data from docs and convert map to List
@@ -62,23 +70,22 @@ class _passScreenState extends State<passScreen> {
   Future<dynamic> getData() async {
     final user = FirebaseAuth.instance.currentUser!;
     final DocumentReference<Map<String, dynamic>> _docRef =
-        await FirebaseFirestore.instance.collection('pass_data').doc(user.uid);
-    print("user uid first is :::" + user.uid);
+        await FirebaseFirestore.instance.collection('pass_data').doc(scanUID);
+
     return Future.delayed(Duration(seconds: 0), () async {
       DocumentSnapshot docSnap = await _docRef.get();
 
       // Get data from docs and convert map to List
       final snapData = docSnap.data() as Map<String, dynamic>;
 
-      // print('role : $role');
-
-      // print(snapData);
       return snapData;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final renewalDays = expiryDate?.difference(curDate).inDays;
+    print("success : $scanUID");
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder(
@@ -125,7 +132,7 @@ class _passScreenState extends State<passScreen> {
 
                               return Scaffold(
                                 backgroundColor:
-                                    Color.fromARGB(255, 255, 226, 226),
+                                    Color.fromARGB(255, 255, 255, 255),
                                 body: Container(
                                     child: Center(
                                         child: Padding(
@@ -137,7 +144,7 @@ class _passScreenState extends State<passScreen> {
                                       SizedBox(height: 30),
                                       QrImage(data: user.uid, size: 120),
                                       SizedBox(height: 50),
-                                      Text("User ID  : " + user.uid),
+                                      Text("User ID  : " + scanUID),
                                       const Divider(
                                         height: 30,
                                         thickness: 0.5,
@@ -174,15 +181,35 @@ class _passScreenState extends State<passScreen> {
                                         color: Colors.grey,
                                       ),
                                       SizedBox(height: 30),
-                                      Text(
-                                        "$renewalDays days left for renewal.",
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Active Pass found",
+                                            style: TextStyle(
+                                                color: Colors.green,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 30),
+                                          ),
+                                          Icon(
+                                            Icons.check_circle,
+                                            color: Colors.green,
+                                            size: 30,
+                                          )
+                                        ],
                                       ),
+                                      // Text(
+                                      //   "$renewalDays days left for renewal.",
+                                      //   style: TextStyle(
+                                      //       color: Colors.red,
+                                      //       fontWeight: FontWeight.bold,
+                                      //       fontSize: 20),
+                                      // ),
                                       SizedBox(height: 30),
-                                      verifyPass(),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("Scan another")),
                                     ],
                                   ),
                                 ))),
@@ -203,38 +230,49 @@ class _passScreenState extends State<passScreen> {
                   return Scaffold(
                     backgroundColor: Color.fromARGB(255, 248, 248, 248),
                     body: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 100,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 100,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "No Active Pass found",
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30),
+                                  ),
+                                  Icon(
+                                    Icons.cancel_rounded,
+                                    color: Colors.red,
+                                    size: 30,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      camera:
+                                      true;
+                                    });
+                                  },
+                                  child: Text("Scan another")),
+                            ],
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Center(
-                            child: Text(
-                              'Buy bus ticket here',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 53, 53, 53),
-                                  fontSize: 38,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Center(
-                            child: Text('No active pass found'),
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const paymentPage()),
-                                );
-                              },
-                              child: Text('Renew now'))
-                        ],
+                        ),
                       ),
                     ),
                   );

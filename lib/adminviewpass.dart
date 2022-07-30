@@ -9,11 +9,11 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'BottomNavigationBar.dart';
 import 'adminDashboard.dart';
 
-class viewPass extends StatefulWidget {
-  const viewPass({Key? key}) : super(key: key);
+class adminviewPass extends StatefulWidget {
+  const adminviewPass({Key? key}) : super(key: key);
 
   @override
-  State<viewPass> createState() => _viewPassState();
+  State<adminviewPass> createState() => _adminviewPassState();
 }
 
 DateTime? expiryDate;
@@ -21,7 +21,7 @@ DateTime? expiryDate;
 final curDate = DateTime.now();
 final user = FirebaseAuth.instance.currentUser!;
 
-class _viewPassState extends State<viewPass> {
+class _adminviewPassState extends State<adminviewPass> {
   Future<dynamic> getData() async {
     return Future.delayed(Duration(seconds: 1), () async {
       final user = FirebaseAuth.instance.currentUser!;

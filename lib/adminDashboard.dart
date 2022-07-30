@@ -1,4 +1,5 @@
 import 'package:cbms/payment.dart';
+import 'package:cbms/qrscanner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -76,8 +77,16 @@ class _adminDashState extends State<adminDash> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(height: 10),
-                                              Text(
-                                                  "Tap here to scan & verify E-pass/ticket"),
+                                              ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Scanner()),
+                                                    );
+                                                  },
+                                                  child: Text('qr open')),
                                               SizedBox(height: 10),
                                             ]),
                                       ),
