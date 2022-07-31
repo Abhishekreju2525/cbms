@@ -39,7 +39,7 @@ class _passScreenState extends State<passScreen> {
 
   verifyPass() {
     // print(renewalDays);
-    if ((renewalDays ?? 0) < 5) {
+    if ((expiryDate?.difference(curDate).inDays)! < 5) {
       status = false;
       print("status is $status");
     } else {
@@ -213,7 +213,7 @@ class _passScreenState extends State<passScreen> {
                           ),
                           Center(
                             child: Text(
-                              'Buy bus ticket here',
+                              'Buy bus pass here',
                               style: TextStyle(
                                   color: Color.fromARGB(255, 53, 53, 53),
                                   fontSize: 38,

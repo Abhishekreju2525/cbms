@@ -1,5 +1,6 @@
 import 'package:cbms/dashboardScreen.dart';
 import 'package:cbms/passScreen.dart';
+import 'package:cbms/passpurchase.dart';
 import 'package:cbms/profiles/profile.dart';
 import 'package:cbms/ticketScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';

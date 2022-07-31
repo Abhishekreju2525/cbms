@@ -20,14 +20,43 @@ class _paymentPageState extends State<paymentPage> {
   bool paymentDone = false;
   final user = FirebaseAuth.instance.currentUser!;
   final cdate = DateTime.now();
+  final List<String> _docIDs = [];
+  final List<String> _fees = [];
+
+  String? location;
+
+  Future<List<Map<dynamic, dynamic>>> getDocId() async {
+    await FirebaseFirestore.instance
+        .collection('fees')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((document) {
+              print(document.reference);
+              _docIDs.add(document.reference.id);
+              _fees.add(document.data()['fees']);
+            }));
+    List<DocumentSnapshot> _templist;
+    List<Map<dynamic, dynamic>> list = [];
+    CollectionReference collectionRef =
+        FirebaseFirestore.instance.collection("feeamount");
+    QuerySnapshot collectionSnapshot = await collectionRef.get();
+
+    _templist = collectionSnapshot.docs.toList();
+
+    list = _templist.map((DocumentSnapshot docSnapshot) {
+      return docSnapshot.data() as Map<dynamic, dynamic>; // <--- Typecast this.
+    }).toList();
+
+    return list;
+  }
 
   // final newdate = DateFormat("yyyy-MM-dd").format(DateTime.now().add(months:5));
   final newdate = DateTime.now().add(Duration(days: 365));
   late Razorpay _razorpay;
-
+  ValueNotifier<String> amt = ValueNotifier("-");
   TextEditingController amtController = TextEditingController();
 
   void openCheckout(amount) async {
+    print("final amount : $amount");
     amount = amount * 100;
 
     var options = {
@@ -47,13 +76,13 @@ class _paymentPageState extends State<paymentPage> {
     Fluttertoast.showToast(
         msg: "Payment successful" + response.paymentId!,
         toastLength: Toast.LENGTH_SHORT);
-
+    print("$amt.value");
     final successpasstransactions = <String, dynamic>{
       "email": user.email!,
       "Payment ID": response.paymentId!,
       "Date": cdate,
       "Expiry date": newdate,
-      "amount": amtController.text
+      "amount": amt.value.toString()
     };
 
     FirebaseFirestore.instance
@@ -87,7 +116,7 @@ class _paymentPageState extends State<paymentPage> {
       "Payment ID": response.paymentId!,
       "purchase date": cdate,
       "Expiry": newdate,
-      "amount": amtController.text,
+      "amount": amt.value.toString(),
       "status": "true",
       // "serial": serialno,
     };
@@ -138,69 +167,114 @@ class _paymentPageState extends State<paymentPage> {
       return passScreen();
     } else {
       return Scaffold(
-        backgroundColor: Color.fromARGB(255, 15, 58, 89),
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-        ),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 100,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Buy bus pass here',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  cursorColor: Colors.white,
-                  autofocus: false,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      labelText: 'Enter amount to be paid',
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
-                      errorStyle:
-                          TextStyle(color: Colors.redAccent, fontSize: 15)),
-                  controller: amtController,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 100,
                 ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (amtController.text.toString().isNotEmpty) {
-                    setState(() {
-                      int amount = int.parse(amtController.text.toString());
-                      openCheckout(amount);
-                    });
-                  }
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(9.0),
-                  child: Text('Make payment'),
+                SizedBox(
+                  height: 10,
                 ),
-                style: ElevatedButton.styleFrom(primary: Colors.green),
-              )
-            ],
+                Text(
+                  'Buy bus pass here',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                FutureBuilder(
+                    future: getDocId(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        print(snapshot.data);
+                        final _data =
+                            snapshot.data as List<Map<dynamic, dynamic>>;
+                        final _feedata = _data as List;
+
+                        // If we got an error
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(
+                              '${snapshot.error} occurred',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          );
+
+                          // if we got our data
+                        } else if (snapshot.hasData) {
+                          return Container(
+                            child: Column(
+                              children: [
+                                Text("Choose your boarding point"),
+                                DropdownButtonFormField(
+                                    hint: Text(_docIDs[0]),
+                                    items: _docIDs.map((e) {
+                                      return DropdownMenuItem(
+                                        value: e,
+                                        child: Text(e),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      location = value as String;
+                                      // print(location);
+                                      // print(_data[0][value]);
+                                      amt.value = _data[0][value];
+                                      print(amt.value);
+                                    }),
+                                SizedBox(height: 20),
+                                ElevatedButton(
+                                    onPressed: () {}, child: Text('Buy')),
+                                SizedBox(height: 50),
+                                ValueListenableBuilder(
+                                    valueListenable: amt,
+                                    builder: (BuildContext context,
+                                        String amount, Widget? child) {
+                                      return Text(
+                                        "Total amount : $amount",
+                                        style: TextStyle(
+                                            color: Colors.green,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      );
+                                    }),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if (amt.value != null) {
+                                      setState(() {
+                                        int finalamount = int.parse(amt.value);
+                                        print(finalamount);
+                                        openCheckout(finalamount);
+                                      });
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.all(9.0),
+                                    child: Text('Make payment'),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.green),
+                                )
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Text('Error page ');
+                        }
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }),
+                SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
           ),
         ),
       );
