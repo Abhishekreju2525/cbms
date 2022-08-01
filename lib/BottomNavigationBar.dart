@@ -2,6 +2,7 @@ import 'package:cbms/dashboardScreen.dart';
 import 'package:cbms/passScreen.dart';
 import 'package:cbms/passpurchase.dart';
 import 'package:cbms/profiles/profile.dart';
+import 'package:cbms/profiles/userprofile.dart';
 import 'package:cbms/ticketScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _HomepageState extends State<Homepage> {
     dashboardScreen(),
     passScreen(),
     ticketScreen(),
-    profile(),
+    UserProfile(),
   ];
 
   @override
