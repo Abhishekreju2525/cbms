@@ -72,7 +72,7 @@ class _ScannerState extends State<Scanner> {
     controller.scannedDataStream.listen((scanData) async {
       controller.pauseCamera();
       String scannedData = scanData.code as String;
-      String scanUID = scannedData.substring(7);
+      String scanUID = scannedData;
 
       await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => adminpassScreen(scanUID, controller)));
