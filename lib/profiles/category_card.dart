@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
+  final iconImagePath;
   final String CategoryName;
 
   CategoryCard({
     required this.CategoryName,
+    required this.iconImagePath,
   });
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,10 @@ class CategoryCard extends StatelessWidget {
         ),
         child: Row(
           children: [
+            Image.asset(
+              iconImagePath,
+              height: 30,
+            ),
             SizedBox(
               width: 20,
             ),

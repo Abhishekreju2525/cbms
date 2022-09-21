@@ -107,12 +107,15 @@ class _dashboardScreenState extends State<dashboardScreen> {
                 children: [
                   CategoryCard(
                     CategoryName: 'NO:5',
+                    iconImagePath: 'lib/icons/clock-15133.png',
                   ),
                   CategoryCard(
                     CategoryName: '08:55 am',
+                    iconImagePath: 'lib/icons/clock-15133.png',
                   ),
                   CategoryCard(
                     CategoryName: 'KL-14H-0226',
+                    iconImagePath: 'lib/icons/clock-15133.png',
                   ),
                 ],
               ),
