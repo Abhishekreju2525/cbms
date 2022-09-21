@@ -79,6 +79,8 @@ flutter:
   assets:
     - lib/icons/
     - lib/icons/clock-15133.png
+    - lib/icons/number.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
