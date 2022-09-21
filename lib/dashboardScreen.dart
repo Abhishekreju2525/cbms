@@ -77,6 +77,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
 
   ValueNotifier<String> amt = ValueNotifier("none");
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return SafeArea(
       child: FutureBuilder(
           future: getDocIds(),
@@ -92,6 +93,126 @@ class _dashboardScreenState extends State<dashboardScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Row(
+=======
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            //app bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Hi ' + user.email!,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18)),
+                      SizedBox(height: 20),
+                      Text(
+                        'Find Your Bus',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  //profile picture
+                  Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurple[100],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(Icons.person)),
+                ],
+              ),
+            ),
+            SizedBox(height: 25),
+
+            //card
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    color: Colors.lightBlue[100],
+                    borderRadius: BorderRadius.circular(12)),
+                child: Row(children: [
+                  Image.asset(
+                    'lib/icons/house.png',
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text("Vidhyanagar",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
+                ]),
+              ),
+            ),
+            SizedBox(height: 25),
+
+            //card
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    color: Colors.pink[100],
+                    borderRadius: BorderRadius.circular(12)),
+                child: Row(children: [
+                  Image.asset(
+                    'lib/icons/college.png',
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text("College",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
+                ]),
+              ),
+            ),
+            SizedBox(height: 25),
+
+            Container(
+              height: 80,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  CategoryCard(
+                    CategoryName: 'NO:5',
+                    iconImagePath: 'lib/icons/number.png',
+                  ),
+                  CategoryCard(
+                    CategoryName: '08:55 am',
+                    iconImagePath: 'lib/icons/clock-15133.png',
+                  ),
+                  CategoryCard(
+                    CategoryName: 'KL-14H-0226',
+                    iconImagePath: 'lib/icons/bus-icon.png',
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(11.0),
+              child: Card(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+>>>>>>> 6fc8746a6698d0ceb65a5886417fcea59c4888c3
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
@@ -105,6 +226,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                               SizedBox(height: 20),
                             ],
                           ),
+<<<<<<< HEAD
 
                           //profile picture
                           Container(
@@ -114,6 +236,9 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Icon(Icons.person)),
+=======
+                          QrImage(data: user.uid, size: 100),
+>>>>>>> 6fc8746a6698d0ceb65a5886417fcea59c4888c3
                         ],
                       ),
                     ),
