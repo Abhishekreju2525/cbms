@@ -21,6 +21,7 @@ class _registerScreen extends State<registerScreen> {
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _usernameController = TextEditingController();
+  bool _isObscure = true;
 
   @override
   void dispose() {
@@ -38,10 +39,35 @@ class _registerScreen extends State<registerScreen> {
         builder: (context) {
           return Center(child: CircularProgressIndicator());
         });
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: _usernameController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _usernameController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      // print('Failed with error code: ${e.code}');
+      // print(e.message);
+      // if (e.code == "user-not-found") {
+      //   errormessage = "Account doesn't exists!";
+      // } else if (e.code == "") {}
+      Navigator.of(context).pop();
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Error"),
+              content: Text(e.code),
+              actions: [
+                TextButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+    }
     final user = FirebaseAuth.instance.currentUser!;
     print(user.uid);
     addUserDetails(
@@ -75,12 +101,13 @@ class _registerScreen extends State<registerScreen> {
     return Material(
         child: Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.white,
-              child: Padding(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: ListView(
                   shrinkWrap: true,
@@ -93,63 +120,93 @@ class _registerScreen extends State<registerScreen> {
                         child: Text(
                           'Register now',
                           style: GoogleFonts.poppins(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF3C2E63),
+                            fontWeight: FontWeight.w600,
                             fontSize: 34,
                           ),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 55,
                     ),
-
                     Container(
                       child: TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(
-                          icon: Icon(Icons.person),
+                          prefixIcon: Icon(Icons.person),
                           labelText: "Name",
+                          filled: true,
+                          fillColor: Color(0xFFFFEBEB),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 19, horizontal: 20),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(21)),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Container(
                       child: TextFormField(
                         controller: _usernameController,
                         decoration: InputDecoration(
-                          icon: Icon(Icons.person),
+                          prefixIcon: Icon(Icons.email),
                           labelText: "Email",
+                          filled: true,
+                          fillColor: Color(0xFFFFEBEB),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 19, horizontal: 20),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(21)),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Container(
                       child: TextFormField(
                         controller: _passwordController, // <= NEW
-                        obscureText: true,
+                        obscureText: _isObscure,
                         decoration: InputDecoration(
-                          icon: Icon(Icons.lock),
-                          labelText: "Password",
-                        ),
+                            prefixIcon: Icon(Icons.lock),
+                            labelText: "Password",
+                            filled: true,
+                            fillColor: Color(0xFFFFEBEB),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 19, horizontal: 20),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(21)),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isObscure
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure = !_isObscure;
+                                });
+                              },
+                            )),
                       ),
                     ),
-                    // Container(
-                    //   child: TextFormField(
-                    //     controller: _confirmpasswordController, // <= NEW
-                    //     obscureText: true,
-                    //     decoration: InputDecoration(
-                    //       icon: Icon(Icons.lock_outline),
-                    //       labelText: "Confirm Password",
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
-                      height: 15,
+                      height: 65,
                     ),
                     Container(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF3C2E63),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 20),
                           shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
+                            borderRadius: new BorderRadius.circular(25.0),
                           ),
                         ),
                         onPressed: signUp,
@@ -157,7 +214,7 @@ class _registerScreen extends State<registerScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 175,
                     ),
                     Container(
                       child: Row(
@@ -168,7 +225,9 @@ class _registerScreen extends State<registerScreen> {
                               onPressed: widget.showLoginPage,
                               child: Text(
                                 'Log in now',
-                                style: TextStyle(color: Colors.red),
+                                style: TextStyle(
+                                    color: Color(0xFF3C2E63),
+                                    fontWeight: FontWeight.w700),
                               ))
                         ],
                       ),
@@ -176,8 +235,8 @@ class _registerScreen extends State<registerScreen> {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ));

@@ -30,6 +30,13 @@
             {
               "client_id": "47779725558-ovlv9gir01imfv5t4boko58eeig8rgqm.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "47779725558-qh0pd20hrpevn358mni0pc329p52p1r7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cbms"
+              }
             }
           ]
         }

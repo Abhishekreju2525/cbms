@@ -1,3 +1,4 @@
+import 'package:cbms/adminPassscreen.dart';
 import 'package:cbms/payment.dart';
 import 'package:cbms/qrscanner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,107 +15,156 @@ class adminDash extends StatefulWidget {
 }
 
 class _adminDashState extends State<adminDash> {
+  final _useridController = TextEditingController();
   final user = FirebaseAuth.instance.currentUser!;
+  late String scanUID;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 205, 222, 255),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
-        child: Column(
-          children: [
-            // FloatingActionButton(
-            //   backgroundColor: Colors.green,
-            //   child: Icon(Icons.add),
-            //   onPressed: () {
-            //     FirebaseFirestore.instance
-            //         .collection('data')
-            //         .add({'text': 'data added through app'});
-            //   },
-            // ),
-            //app bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Row(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 25),
-                      SizedBox(height: 25),
-                      Text('Admin ' + user.email!,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18)),
-                      SizedBox(height: 20),
-                      Text(
-                        'User ID :' + user.uid,
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      SizedBox(height: 50),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(11.0),
+          child: Column(
+            children: [
+              Container(
+                child: Column(
+                  children: [Text("Hi " + user.uid)],
+                ),
+              ),
+              Container(
+                height: 500,
+                padding: EdgeInsets.all(11.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromARGB(255, 246, 238, 255),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 14,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Title(
                           color: Colors.white,
+                          child: Text(
+                            "Verify E-Pass/ Ticket",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 27,
+                                color: Color.fromARGB(255, 32, 32, 32)),
+                          )),
+                    ),
+
+                    SizedBox(
+                      height: 14,
+                    ),
+                    //////////////////////
+                    Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            padding: EdgeInsets.all(15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Card(
-                                      color: Color.fromARGB(255, 255, 197, 226),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height: 10),
-                                              ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              Scanner()),
-                                                    );
-                                                  },
-                                                  child: Text('qr open')),
-                                              SizedBox(height: 10),
-                                            ]),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xFF3C2E63),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 15, horizontal: 20),
+                                      shape: new RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(25.0),
                                       ),
                                     ),
-                                    Icon(Icons.qr_code_scanner),
-                                  ],
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Scanner()),
+                                      );
+                                    },
+                                    child: Text('Tap to scan the QR code')),
+                                Icon(
+                                  Icons.qr_code_2,
+                                  size: 50,
                                 )
                               ],
                             ),
                           ),
+                        )),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    ////////////////////////////
+                    Center(
+                      child: Container(
+                        child: Text(
+                          "OR",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 32, 32, 32)),
                         ),
-                      )
-                    ],
-                  ),
-                  //profile picture
-                ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    //////////////////////////////
+                    Container(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 0,
+                              ),
+                              TextField(
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                  labelText: 'Enter user ID',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              ElevatedButton(
+                                  // onPressed: () async {
+                                  //   scanUID:
+                                  //   _useridController.text.trim();
+                                  //   this.controller;:_useridController;
+                                  //   await Navigator.of(context).push(
+                                  //       MaterialPageRoute(
+                                  //           builder: (context) => adminpassScreen(
+                                  //               scanUID, controller)));
+                                  // },
+                                  onPressed: (() {}),
+                                  child: Text("Verify"))
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 25),
-
-            //card
-
-            //card
-
-            SizedBox(height: 25),
-
-            //horizontal listview
-          ],
+            ],
+          ),
         ),
       ),
     );
