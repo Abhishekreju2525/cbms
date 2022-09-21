@@ -115,7 +115,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                   ),
                   CategoryCard(
                     CategoryName: 'KL-14H-0226',
-                    iconImagePath: 'lib/icons/clock-15133.png',
+                    iconImagePath: 'lib/icons/bus-icon.png',
                   ),
                 ],
               ),
