@@ -33,6 +33,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(height: 20),
             //app bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -153,7 +154,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text('Scan QR to verify E-Pass')),
                           ),
-                          QrImage(data: user.uid, size: 80),
+                          QrImage(data: user.uid, size: 100),
                         ],
                       )
                     ],
