@@ -75,6 +75,13 @@ class _dashboardScreenState extends State<dashboardScreen> {
                     color: Colors.lightBlue[100],
                     borderRadius: BorderRadius.circular(12)),
                 child: Row(children: [
+                  Image.asset(
+                    'lib/icons/house.png',
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
                   Text("Vidhyanagar",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
@@ -92,6 +99,13 @@ class _dashboardScreenState extends State<dashboardScreen> {
                     color: Colors.pink[100],
                     borderRadius: BorderRadius.circular(12)),
                 child: Row(children: [
+                  Image.asset(
+                    'lib/icons/college.png',
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
                   Text("College",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
