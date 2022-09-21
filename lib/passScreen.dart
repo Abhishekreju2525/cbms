@@ -125,7 +125,7 @@ class _passScreenState extends State<passScreen> {
 
                               return Scaffold(
                                 backgroundColor:
-                                    Color.fromARGB(255, 255, 226, 226),
+                                    Color.fromARGB(255, 241, 233, 255),
                                 body: Container(
                                     child: Center(
                                         child: Padding(

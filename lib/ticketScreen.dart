@@ -182,7 +182,7 @@ class _ticketScreenState extends State<ticketScreen> {
                 print("Snapshot data ::: $data");
                 if (data['status'] == "true") {
                   return Scaffold(
-                    backgroundColor: Color.fromARGB(255, 203, 211, 238),
+                    backgroundColor: Color.fromARGB(255, 255, 246, 246),
                     body: SingleChildScrollView(
                       child: Column(
                         children: [
@@ -195,33 +195,35 @@ class _ticketScreenState extends State<ticketScreen> {
                           Text(
                             'Buy bus ticket here',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 53, 53, 53),
+                                color: Color(0xFF3C2E63),
                                 fontSize: 38,
                                 fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 20,
                           ),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(20.0),
                             child: TextFormField(
                               cursorColor: Color.fromARGB(255, 43, 43, 43),
                               autofocus: false,
                               style: TextStyle(
                                   color: Color.fromARGB(255, 139, 6, 6)),
                               decoration: InputDecoration(
-                                  labelText: 'Enter amount to be paid',
-                                  labelStyle: TextStyle(
-                                    color: Color.fromARGB(255, 54, 54, 54),
-                                    fontSize: 15,
-                                  ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0))),
-                                  errorStyle: TextStyle(
-                                      color: Color.fromARGB(255, 177, 0, 0),
-                                      fontSize: 15)),
+                                labelText: 'Enter amount to be paid',
+                                labelStyle: TextStyle(
+                                  color: Color.fromARGB(255, 54, 54, 54),
+                                  fontSize: 15,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 19, horizontal: 20),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(21)),
+                              ),
                               controller: amtController,
                             ),
                           ),
@@ -242,8 +244,14 @@ class _ticketScreenState extends State<ticketScreen> {
                               padding: EdgeInsets.all(9.0),
                               child: Text('Make payment'),
                             ),
-                            style:
-                                ElevatedButton.styleFrom(primary: Colors.green),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF3C2E63),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 20),
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 50,
@@ -267,7 +275,8 @@ class _ticketScreenState extends State<ticketScreen> {
                                     Row(
                                       children: [
                                         Card(
-                                          color: Colors.amber,
+                                          color: Color.fromARGB(
+                                              255, 255, 238, 189),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Column(

@@ -227,9 +227,6 @@ class _paymentPageState extends State<paymentPage> {
                                       print(amt.value);
                                     }),
                                 SizedBox(height: 20),
-                                ElevatedButton(
-                                    onPressed: () {}, child: Text('Buy')),
-                                SizedBox(height: 50),
                                 ValueListenableBuilder(
                                     valueListenable: amt,
                                     builder: (BuildContext context,

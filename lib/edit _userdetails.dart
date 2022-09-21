@@ -135,7 +135,7 @@ class _editUserState extends State<editUser> {
                     ],
                   );
                 }
-                return Text('Loading...');
+                return CircularProgressIndicator();
               })),
         ),
       );

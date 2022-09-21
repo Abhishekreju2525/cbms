@@ -28,13 +28,44 @@ class _adminDashState extends State<adminDash> {
           padding: const EdgeInsets.all(11.0),
           child: Column(
             children: [
-              Container(
-                child: Column(
-                  children: [Text("Hi " + user.uid)],
-                ),
+              SizedBox(
+                height: 20,
               ),
               Container(
-                height: 500,
+                child: Row(
+                  children: [
+                    Icon(Icons.admin_panel_settings),
+                    Text(
+                      "Admin",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 30, 28, 34),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 60,
+              ),
+              Container(
+                child: Column(
+                  children: [
+                    Text(
+                      "Hi, " + user.email!,
+                      style: TextStyle(
+                          color: Color(0xFF3C2E63),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Container(
+                height: 400,
                 padding: EdgeInsets.all(11.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -153,6 +184,15 @@ class _adminDashState extends State<adminDash> {
                                   //           builder: (context) => adminpassScreen(
                                   //               scanUID, controller)));
                                   // },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xFF3C2E63),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 11, horizontal: 20),
+                                    shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(10.0),
+                                    ),
+                                  ),
                                   onPressed: (() {}),
                                   child: Text("Verify"))
                             ],
