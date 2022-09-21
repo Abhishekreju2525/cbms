@@ -81,6 +81,8 @@ flutter:
     - lib/icons/clock-15133.png
     - lib/icons/number.png
     - lib/icons/bus-icon.png
+    - lib/icons/house.png
+    - lib/icons/college.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
